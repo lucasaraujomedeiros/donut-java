@@ -12,14 +12,16 @@ public class Donut {
 
     public Donut(double circleRadius, double revolutionRadius,
                  double theta, double alpha) {
-        double rotationAngle = theta;
-        double[] vector = new double[] {revolutionRadius, 0, 0};
+        double rotationAngle = 0;
+        
 
         this.points = new ArrayList<double[]>();
+        double x = 0;
+        double y = 0;
         while (rotationAngle < 2* Math.PI) {
-            vector[0] = vector[0] + circleRadius * Math.cos(theta);
-            vector[1] = vector[1] + circleRadius * Math.sin(theta);
-            points.add(vector);
+            points.add(new double[] {x,y,0});
+            x = circleRadius * Math.cos(rotationAngle);
+            y = circleRadius * Math.sin(rotationAngle);
             rotationAngle += theta;
         }
         
@@ -29,8 +31,10 @@ public class Donut {
             double negSin = -1* Math.sin(revolutionAngle);
 
             for (double[] point : points) {
-                point[2] = point[1] * negSin;
-                point[0] = point[0] * cos;
+                double z = point[1] * negSin;
+                x = point[0] * cos;
+                points.add(new double[] {x, point[1], z});
+
             }
 
             revolutionAngle += alpha;
@@ -40,18 +44,3 @@ public class Donut {
     }
 
 }
-/* 
-
-class Point {
-    double[] vector;
-    double x;
-    double y;
-    double z;
-    
-
-    Point(double[] vector) {
-        this.vector = vector;
-       
-    }
-}
-*/

@@ -15,9 +15,9 @@ public class ConsoleBuffer {
     }
     public static void main(String[] args) {
         ConsoleBuffer cb = new ConsoleBuffer();
-        Donut donut = new Donut(2, 2, 0.17, 0.17);
+        Donut donut = new Donut(5, 5, 0.17, 0.17);
+
         cb.drawPoints(donut.points);
-        clearScreen();
         for (String[] strArray : cb.matrix) {
             for (String str : strArray) {
                 System.out.print(str);
@@ -25,9 +25,7 @@ public class ConsoleBuffer {
             System.out.print("\n");
         }
 
-        for (double[] point : donut.points) {
-            System.out.println ("ponto: " + point[0] + point[1]);
-        }
+        System.out.println(cb.getPointCoordinates());
 
 
     }
@@ -39,18 +37,34 @@ public class ConsoleBuffer {
 
     public void drawPoints(ArrayList<double[]> points) {
         for (double[] point : points) {
-            matrix[x(point[0])][y(point[1])] = ".";
+            matrix[y(point[1])][x(point[0])] = ".";
         }
     }
 
+
     int x(double xPoint) {
-        return (int) xPoint + 10;
+        return (int) xPoint + 20;
     }
 
     int y(double yPoint) {
-        return (int) yPoint + 20;
+        return (int) yPoint + 9;
+    }
+
+    String getPointCoordinates() {
+        String out = "";
+
+        for (int i = 0; i < matrix.length; i ++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j].equals(".")) {
+                    out = out + "Ponto (" + i + ", " + j + ")\n";
+                }
+            }
+        }
+        return out;
+
     }
     
-
+// matrix 21 arrays contendo 42 caracteres
+// matrix [y][x]
 
 }
