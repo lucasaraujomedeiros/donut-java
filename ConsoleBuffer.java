@@ -15,7 +15,7 @@ public class ConsoleBuffer {
     }
     public static void main(String[] args) {
         ConsoleBuffer cb = new ConsoleBuffer();
-        Donut donut = new Donut(5, 5, 0.17, 0.17);
+        Donut donut = new Donut(5, 9, 0.17, 0.17);
 
         cb.drawPoints(donut.points);
         for (String[] strArray : cb.matrix) {
@@ -26,6 +26,7 @@ public class ConsoleBuffer {
         }
 
         System.out.println(cb.getPointCoordinates());
+        donut.getPoints();
 
 
     }

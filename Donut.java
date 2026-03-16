@@ -20,17 +20,20 @@ public class Donut {
         double y = 0;
         while (rotationAngle < 2* Math.PI) {
             points.add(new double[] {x,y,0});
-            x = circleRadius * Math.cos(rotationAngle);
+            x = revolutionRadius + circleRadius * Math.cos(rotationAngle);
             y = circleRadius * Math.sin(rotationAngle);
             rotationAngle += theta;
         }
         
         double revolutionAngle = alpha;
+        int pointsLength = points.size();
+
         while (revolutionAngle < 2 * Math.PI) {
             double cos = Math.cos(revolutionAngle);
             double negSin = -1* Math.sin(revolutionAngle);
 
-            for (double[] point : points) {
+            for (int i = 0; i < pointsLength; i++) {
+                double[] point = points.get(i);
                 double z = point[1] * negSin;
                 x = point[0] * cos;
                 points.add(new double[] {x, point[1], z});
@@ -40,6 +43,13 @@ public class Donut {
             revolutionAngle += alpha;
         }
         
+
+    }
+
+    public void getPoints() {
+        for (double[] point : points) {
+            System.out.println("Ponto: X: " + point[0] + " Y: " + point[1] + " Z: " + point[2]);
+        }
 
     }
 
