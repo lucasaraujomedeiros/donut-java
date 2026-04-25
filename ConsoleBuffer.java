@@ -15,19 +15,24 @@ public class ConsoleBuffer {
     }
     public static void main(String[] args) {
         ConsoleBuffer cb = new ConsoleBuffer();
-        Donut donut = new Donut(5, 9, 0.17, 0.17);
-
-        cb.drawPoints(donut.points);
-        for (String[] strArray : cb.matrix) {
-            for (String str : strArray) {
-                System.out.print(str);
+        //Donut donut = new Donut(5, 11, 0.17, 0.17);
+        Cross donut = new Cross();
+       
+        while (true) {
+            cb.drawPoints(donut.points);
+            cb.printPoints();
+            for (double[] point : donut.points) {
+                cb.rotateY(point, 0.3);
             }
-            System.out.print("\n");
+            try {
+                Thread.sleep(200); 
+            } catch (InterruptedException e) {
+                // Handle the exception if the sleep is interrupted
+                Thread.currentThread().interrupt();
+            }
+            clearScreen();
         }
-
-        System.out.println(cb.getPointCoordinates());
-        donut.getPoints();
-
+    
 
     }
 
@@ -37,9 +42,15 @@ public class ConsoleBuffer {
     }
 
     public void drawPoints(ArrayList<double[]> points) {
+        for (int i = 0; i < matrix.length; i ++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                matrix[i][j] = " ";
+            }
+        }
         for (double[] point : points) {
             matrix[y(point[1])][x(point[0])] = ".";
         }
+        System.out.println("\n");
     }
 
 
@@ -49,6 +60,16 @@ public class ConsoleBuffer {
 
     int y(double yPoint) {
         return (int) yPoint + 9;
+    }
+
+    void printPoints() {
+        for (String[] strArray : this.matrix) {
+            for (String str : strArray) {
+                System.out.print(str);
+            }
+            System.out.print("\n");
+        }
+
     }
 
     String getPointCoordinates() {
@@ -64,7 +85,35 @@ public class ConsoleBuffer {
         return out;
 
     }
-    
+
+
+    void rotateY(double[] point, double angleYRotation) {
+        double sinA = Math.sin(angleYRotation);
+        double cosA = Math.cos(angleYRotation);
+
+        double x = point[0];
+        double y = point[1];
+        double z = point[2];
+        
+        point[0] = x * cosA + z * sinA;
+        point[2] = -x * sinA + z * cosA;
+    }
+
+
+    void rotate(double[] point, double angleXRotation, double angleZRotation) {
+        double sinA = Math.sin(angleXRotation);
+        double cosA = Math.cos(angleXRotation);
+        double sinB = Math.sin(angleZRotation);
+        double cosB = Math.cos(angleZRotation);
+
+        double x = point[0];
+        double y = point[1];
+        double z = point[2];
+        
+        point[0] = x * cosB - y * cosA * cosB + z * sinA * sinB;
+        point[1] = x * sinB + y * cosA * cosB - z * sinA * cosB;
+        point[2] = y * sinA + z * cosA;
+    }
 // matrix 21 arrays contendo 42 caracteres
 // matrix [y][x]
 
