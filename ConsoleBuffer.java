@@ -22,7 +22,8 @@ public class ConsoleBuffer {
             cb.drawPoints(donut.points);
             cb.printPoints();
             for (double[] point : donut.points) {
-                cb.rotateY(point, 0.3);
+                //cb.rotateY(point, 0.3);
+                cb.rotate(point, 0.1, 0.1);
             }
             try {
                 Thread.sleep(200); 
@@ -110,9 +111,9 @@ public class ConsoleBuffer {
         double y = point[1];
         double z = point[2];
         
-        point[0] = x * cosB - y * cosA * cosB + z * sinA * sinB;
-        point[1] = x * sinB + y * cosA * cosB - z * sinA * cosB;
-        point[2] = y * sinA + z * cosA;
+        point[0] = x * cosB - y * sinB;
+        point[1] = x * cosA * sinB + y * cosA * cosB - z * sinA;
+        point[2] = x * sinA * sinB + y * sinA * cosB + z * cosA;
     }
 // matrix 21 arrays contendo 42 caracteres
 // matrix [y][x]
